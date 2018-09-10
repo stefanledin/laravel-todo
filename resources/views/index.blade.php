@@ -11,12 +11,22 @@
 
         <div class="container mx-auto bg-white">
             <h1>Laravel Todo</h1>
-            <ul class="list-reset">
-                <li class="flex">
-                    <input type="checkbox">
-                    <span>Todo 1</span>
-                </li>
-            </ul>
+            <div id="app">
+                @isset ($todos)
+                    <ul class="list-reset">
+                        <li v-for="todo in todos" class="flex">
+                            <input type="checkbox">
+                            <span v-html="todo.label"></span>
+                        </li>
+                    </ul>
+                @endisset
+                <form action="/todos" method="POST" v-on:submit.prevent="onSubmit">
+                    <input type="hidden" name="_method" value="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="text" v-model="new_todo" name="new_todo" class="border-grey border-solid border">
+                    <input type="submit" value="Spara">
+                </form>
+            </div>
         </div>
 
         <script src="{{ mix('/js/app.js') }}"></script>

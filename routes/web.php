@@ -1,5 +1,8 @@
 <?php
 
 Route::get('/', function () {
-    return view('index');
+    $todos = App\Todo::all();
+    return view('index', ['todos' => $todos]);
 });
+
+Route::resource('todos', 'TodoController');
